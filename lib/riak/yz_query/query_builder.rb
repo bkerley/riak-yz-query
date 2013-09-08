@@ -7,11 +7,11 @@ module Riak
 
       def initialize_from_opts(opts)
         @bucket = opts[:bucket]
-        where_clauses.merge! opts[:where_clauses]
+        @where_clauses = opts[:where_clauses]
       end
 
       def where(opts)
-        chain where_clauses: where_clauses.consume opts
+        chain where_clauses: where_clauses.consume(opts)
       end
 
       def keys
@@ -19,9 +19,7 @@ module Riak
       end
 
       def to_yz_query
-        where_clauses.map do |k,v|
-          "#{k}:#{v}"
-        end.join ' AND '
+        where_clauses.to_yz_query
       end
 
       private
@@ -42,7 +40,7 @@ module Riak
       end
 
       def where_clauses
-        @where_clauses ||= Hash.new
+        @where_clauses ||= WhereClause.new Hash.new
       end
     end
   end

@@ -5,7 +5,7 @@ require 'riak/yz_query/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "riak-yz-query"
-  spec.version       = Riak::Yz::Query::VERSION
+  spec.version       = Riak::YzQuery::VERSION
   spec.authors       = ["Bryce Kerley"]
   spec.email         = ["bkerley@brycekerley.net"]
   spec.description   = %q{Arel-style queries for Riak Yokozuna}
