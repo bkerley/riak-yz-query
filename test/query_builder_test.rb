@@ -22,7 +22,7 @@ class QueryBuilderTest < TestCase
       q = @bucket.query
       client.
         expects(:search).
-        with(@bucket.name, 'asdf:"jkl"', {limit: nil, offset: nil}).
+        with(@bucket.name, 'asdf:"jkl"', {}).
         returns({
                   'docs' => [
                              'score' => 1.0,
@@ -46,6 +46,26 @@ class QueryBuilderTest < TestCase
       end
       should 'support arrays with interpolation' do
         assert_produces 'asdf:"jkl"', ['asdf:?', 'jkl']
+      end
+    end
+
+    context 'limit and offset' do
+      should "pass limit and offset through" do
+        q = @bucket.query
+        client.
+          expects(:search).
+          with(@bucket.name, 'asdf:"jkl"', {rows: 4, start: 5}).
+          returns({
+                    'docs' => [
+                               'score' => 1.0,
+                               '_yz_rk' => 'jkl',
+                              ],
+                    'max_score' => 1.0,
+                    'num_found' => 1
+                  })
+
+      keys = q.where(asdf: 'jkl').limit(4).offset(5).keys
+      assert_equal ['jkl'], keys
       end
     end
   end

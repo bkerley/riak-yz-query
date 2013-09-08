@@ -58,7 +58,7 @@ class IntegrationTest < TestCase
         order(created_dt: 'asc').
         limit(5).
         offset(5)
-      
+
       assert_equal(['RvOzMXHJrDG6HbqQaZGrq50qzP',
                     'AGB7aYJ31jvMTaaolur9Hqp2gyF',
                     'LYNcKRvQiUNaKW1zTEDdzZytrQp',
