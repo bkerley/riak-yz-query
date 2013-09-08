@@ -50,12 +50,12 @@ module Riak
 
       def escape(candidate)
         case candidate
-        when String
-          return escape_string candidate
         when Range
           return "[#{escape(candidate.begin)} TO #{escape(candidate.end)}]"
         when Time
           return candidate.iso8601
+        else
+          escape_string candidate.to_s
         end
       end
 
