@@ -11,6 +11,8 @@ module Riak
           @clause.map do |k,v|
             "#{k}:#{v}"
           end.join ' AND '
+        when String
+          @clause
         end
       end
 
@@ -18,6 +20,12 @@ module Riak
         if @clause.is_a? Hash and new_clause.is_a? Hash
           return self.class.new(@clause.merge new_clause)
         end
+
+        if @clause.empty?
+          return self.class.new new_clause
+        end
+
+        return self.class.new "(#{to_yz_query}) AND #{new_clause}"
       end
     end
   end
