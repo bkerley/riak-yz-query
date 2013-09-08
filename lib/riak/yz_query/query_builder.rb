@@ -33,6 +33,10 @@ module Riak
         @keys ||= results['docs'].map{|d| d['_yz_rk']}
       end
 
+      def values
+        @bucket.get_many keys
+      end
+
       def to_yz_query
         where_clauses.to_yz_query
       end
