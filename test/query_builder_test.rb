@@ -22,7 +22,7 @@ class QueryBuilderTest < TestCase
       q = @bucket.query
       client.
         expects(:search).
-        with(@bucket.name, 'asdf:"jkl"').
+        with(@bucket.name, 'asdf:"jkl"', {limit: nil, offset: nil}).
         returns({
                   'docs' => [
                              'score' => 1.0,
