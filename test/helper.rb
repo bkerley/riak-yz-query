@@ -4,6 +4,9 @@ require 'minitest/autorun'
 
 require 'shoulda/context'
 
+require 'riak'
+require 'riak/yz/query'
+
 class TestCase < MiniTest::Unit::TestCase
   include ShouldaContextLoadable
 
