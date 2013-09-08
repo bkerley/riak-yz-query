@@ -1,1 +1,1 @@
-require "riak/yz/query"
+require "riak/yz_query"

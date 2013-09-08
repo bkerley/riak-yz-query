@@ -6,7 +6,7 @@ require 'shoulda/context'
 require 'mocha/setup'
 
 require 'riak'
-require 'riak/yz/query'
+require 'riak-yz-query'
 
 class TestCase < MiniTest::Unit::TestCase
   include ShouldaContextLoadable

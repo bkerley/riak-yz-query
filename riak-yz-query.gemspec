@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'riak/yz/query/version'
+require 'riak/yz_query/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "riak-yz-query"
