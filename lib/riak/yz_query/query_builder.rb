@@ -8,10 +8,20 @@ module Riak
       def initialize_from_opts(opts)
         @bucket = opts[:bucket]
         @where_clauses = opts[:where_clauses]
+        @limit = opts[:limit]
+        @offset = opts[:offset]
       end
 
       def where(opts)
         chain where_clauses: where_clauses.consume(opts)
+      end
+
+      def limit(lim)
+        chain limit: lim
+      end
+
+      def offset(off)
+        chain offset: off
       end
 
       def keys
@@ -26,7 +36,9 @@ module Riak
       def chain(opts)
         new_options = {
           bucket: @bucket,
-          where_clauses: where_clauses
+          where_clauses: where_clauses,
+          limit: @limit,
+          offset: @offset
         }.merge opts
 
         chain = self.class.allocate
@@ -36,7 +48,7 @@ module Riak
       end
 
       def results
-        @results ||= @bucket.client.search @bucket.name, to_yz_query
+        @results ||= @bucket.client.search @bucket.name, to_yz_query, limit: @limit, offset: @offset
       end
 
       def where_clauses
