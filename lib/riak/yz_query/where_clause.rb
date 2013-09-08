@@ -27,7 +27,9 @@ module Riak
           return self.class.new new_clause
         end
 
-        return self.class.new "(#{to_yz_query}) AND #{new_clause}"
+        new_clause_query = self.class.new(new_clause).to_yz_query
+
+        return self.class.new "(#{to_yz_query}) AND #{new_clause_query}"
       end
 
       private
