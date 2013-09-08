@@ -42,6 +42,30 @@ class IntegrationTest < TestCase
 
       assert_includes q.keys, 'Hswdh9zli0CDcnPSKmEGeIcd6tU'
     end
-    should 'perform single-term queries with pagination controls'
+
+    should 'perform multi-term queries with ranges' do
+      open = Time.parse '2007-12-10T23:59:59Z'
+      close = Time.parse '2007-12-20T23:59:59Z'
+      q = @bucket.query.where created_dt: (open..close)
+      q_merge = q.where name_t: 'Bryce'
+
+      assert_includes q.keys, 'Hswdh9zli0CDcnPSKmEGeIcd6tU'
+    end
+
+    should 'perform single-term queries with pagination controls' do
+      q = @bucket.query.
+        where(name_t: '*e*').
+        order(created_dt: 'asc').
+        limit(5).
+        offset(5)
+      
+      assert_equal(['RvOzMXHJrDG6HbqQaZGrq50qzP',
+                    'AGB7aYJ31jvMTaaolur9Hqp2gyF',
+                    'LYNcKRvQiUNaKW1zTEDdzZytrQp',
+                    'Hswdh9zli0CDcnPSKmEGeIcd6tU',
+                    '6l5cpsxsyDb9mDHEtcS9U6mNCbO'
+                   ],
+                   q.keys)
+    end
   end
 end
