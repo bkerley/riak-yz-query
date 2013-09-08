@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'minitest/autorun'
 
 require 'shoulda/context'
+require 'mocha/setup'
 
 require 'riak'
 require 'riak/yz/query'

@@ -9,7 +9,7 @@ class IntegrationTest < TestCase
     should 'perform single-term queries' do
       results = @bucket.query.where(name_t: '*drew*')
       assert results
-      refute_empty results
+      refute_empty results.keys
     end
 
     should 'perform multi-term queries'
