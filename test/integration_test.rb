@@ -10,6 +10,7 @@ class IntegrationTest < TestCase
       q = @bucket.query.where(name_t: '*drew*')
       assert q
       refute_empty q.keys
+      assert_includes q.keys, 'PtgA5YsxWpSg7RzTY2eJVJ81hDQ'
     end
 
     should 'perform multi-term queries' do
