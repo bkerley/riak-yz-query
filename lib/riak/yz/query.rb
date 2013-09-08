@@ -1,4 +1,6 @@
-require "riak/yz/query/version"
+%w{bucket_extension version}.each do |f| 
+  require "riak/yz/query/#{f}" 
+end
 
 module Riak
   module Yz
