@@ -16,6 +16,12 @@ class WhereClauseTest < TestCase
       assert_equal '(asdf:"jkl") AND qwe:rty', c_merge.to_yz_query
     end
 
+    should 'merge a string and a hash' do
+      c = WhereClause.new 'qwe:rty'
+      c_merge = c.consume asdf: 'jkl'
+      assert_equal '(qwe:rty) AND asdf:"jkl"', c_merge.to_yz_query
+    end
+
     should 'merge a string and a string' do
       c = WhereClause.new "bryce:hello"
       c_merge = c.consume "hello:to_u"
