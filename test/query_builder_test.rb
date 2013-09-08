@@ -15,14 +15,14 @@ class QueryBuilderTest < TestCase
 
     should "convert to a yokozuna query" do
       q = @bucket.query.where(asdf: 'jkl')
-      assert_equal "asdf:jkl", q.to_yz_query
+      assert_equal 'asdf:"jkl"', q.to_yz_query
     end
 
     should "query on #keys" do
       q = @bucket.query
       client.
         expects(:search).
-        with(@bucket.name, 'asdf:jkl').
+        with(@bucket.name, 'asdf:"jkl"').
         returns({
                   'docs' => [
                              'score' => 1.0,
@@ -38,8 +38,8 @@ class QueryBuilderTest < TestCase
 
     context 'where clauses' do
       should 'support hashes' do
-        assert_produces 'asdf:jkl', {asdf: 'jkl'}
-        assert_produces 'asdf:jkl', {'asdf' => 'jkl'}
+        assert_produces 'asdf:"jkl"', {asdf: 'jkl'}
+        assert_produces 'asdf:"jkl"', {'asdf' => 'jkl'}
       end
       should 'support strings' do
         assert_produces 'asdf:jkl', 'asdf:jkl'
