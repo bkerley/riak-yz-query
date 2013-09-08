@@ -6,14 +6,17 @@ module Riak
           @bucket = bucket
         end
 
-        def where(opts)
-          where_clauses.merge! opts
+        def initialize_from_opts(opts)
+          @bucket = opts[:bucket]
+          where_clauses.merge! opts[:where_clauses]
+        end
 
-          self
+        def where(opts)
+          chain where_clauses: where_clauses.merge(opts)
         end
 
         def keys
-          results['docs'].map{|d| d['_yz_rk']}
+          @keys ||= results['docs'].map{|d| d['_yz_rk']}
         end
 
         def to_yz_query
@@ -23,6 +26,18 @@ module Riak
         end
 
         private
+        def chain(opts)
+          new_options = {
+            bucket: @bucket,
+            where_clauses: where_clauses
+          }.merge opts
+
+          chain = self.class.allocate
+          chain.initialize_from_opts new_options
+
+          return chain
+        end
+
         def results
           @results ||= @bucket.client.search @bucket.name, to_yz_query
         end

@@ -8,7 +8,9 @@ class QueryBuilderTest < TestCase
 
     should "chain from 'where'" do
       q = @bucket.query
-      assert_equal q, q.where(asdf: 'asdf')
+      q_where = q.where(asdf: 'asdf')
+      refute_equal q, q_where
+      assert_instance_of Riak::Yz::Query::QueryBuilder, q_where
     end
 
     should "convert to a yokozuna query" do
