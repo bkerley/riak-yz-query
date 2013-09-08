@@ -1,3 +1,5 @@
+require 'time'
+
 module Riak
   module YzQuery
     class WhereClause
@@ -31,7 +33,7 @@ module Riak
       private
       def build_clause_hash
         @clause.map do |k,v|
-          "#{k}:#{escape_string v}"
+          "#{k}:#{escape v}"
         end.join ' AND '
       end
 
@@ -40,10 +42,21 @@ module Riak
         remaining = @clause[1..-1].dup
 
         while remaining.length > 0
-          working['?'] = escape_string remaining.shift
+          working['?'] = escape remaining.shift
         end
 
         working
+      end
+
+      def escape(candidate)
+        case candidate
+        when String
+          return escape_string candidate
+        when Range
+          return "[#{escape(candidate.begin)} TO #{escape(candidate.end)}]"
+        when Time
+          return candidate.iso8601
+        end
       end
 
       def escape_string(str)

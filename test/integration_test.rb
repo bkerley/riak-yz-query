@@ -1,4 +1,5 @@
 require 'helper'
+require 'time'
 
 class IntegrationTest < TestCase
   context 'riak-yz-query with some data' do
@@ -34,7 +35,13 @@ class IntegrationTest < TestCase
       end
     end
 
-    should 'perform range queries'
+    should 'perform range queries with times' do
+      open = Time.parse '2007-12-10T23:59:59Z'
+      close = Time.parse '2007-12-20T23:59:59Z'
+      q = @bucket.query.where created_dt: (open..close)
+
+      assert_includes q.keys, 'Hswdh9zli0CDcnPSKmEGeIcd6tU'
+    end
     should 'perform single-term queries with pagination controls'
   end
 end
