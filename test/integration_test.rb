@@ -7,12 +7,17 @@ class IntegrationTest < TestCase
     end
 
     should 'perform single-term queries' do
-      results = @bucket.query.where(name_t: '*drew*')
-      assert results
-      refute_empty results.keys
+      q = @bucket.query.where(name_t: '*drew*')
+      assert q
+      refute_empty q.keys
     end
 
-    should 'perform multi-term queries'
+    should 'perform multi-term queries' do
+      q = @bucket.query.where(name_t: '*drew*', title_t: '*engineer*')
+      assert q
+      refute_empty q.keys
+    end
+
     should 'perform range queries'
     should 'perform single-term queries with pagination controls'
   end
