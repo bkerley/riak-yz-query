@@ -8,8 +8,6 @@ class IntegrationTest < TestCase
 
     should 'perform single-term queries' do
       q = @bucket.query.where(name_t: '*drew*')
-      assert q
-      refute_empty q.keys
       ['Z0tsBudxTQp50pBlTNeBw6CtwZx',
        'PtgA5YsxWpSg7RzTY2eJVJ81hDQ',
        'OL1quOfOKiYEmxYsqvjf9cyRmH3'].each do |k|
@@ -19,8 +17,6 @@ class IntegrationTest < TestCase
 
     should 'perform multi-term AND queries' do
       q = @bucket.query.where(name_t: '*drew*', title_t: '*engineer*')
-      assert q
-      refute_empty q.keys
       ['Z0tsBudxTQp50pBlTNeBw6CtwZx',
        'PtgA5YsxWpSg7RzTY2eJVJ81hDQ'].each do |k|
         assert_includes q.keys, k
@@ -30,7 +26,13 @@ class IntegrationTest < TestCase
       end
     end
 
-    should 'perform multi-term OR queries'
+    should 'perform multi-term OR queries' do
+      q = @bucket.query.where(['name_t:? OR name_t:?', 'Drew', 'Bryce'])
+      ['Z0tsBudxTQp50pBlTNeBw6CtwZx',
+       'Hswdh9zli0CDcnPSKmEGeIcd6tU'].each do |k|
+        assert_includes q.keys, k
+      end
+    end
 
     should 'perform range queries'
     should 'perform single-term queries with pagination controls'

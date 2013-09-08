@@ -44,7 +44,9 @@ class QueryBuilderTest < TestCase
       should 'support strings' do
         assert_produces 'asdf:jkl', 'asdf:jkl'
       end
-      should 'support arrays with interpolation'
+      should 'support arrays with interpolation' do
+        assert_produces 'asdf:"jkl"', ['asdf:?', 'jkl']
+      end
     end
   end
 
