@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest", "~> 4.7"
   spec.add_development_dependency "shoulda-context", "~> 1.1.5"
+  spec.add_development_dependency "mocha", "~> 0.14.0"
 
   spec.add_dependency 'riak-client'
 end
