@@ -10,13 +10,15 @@ Gem::Specification.new do |spec|
   spec.email         = ["bkerley@brycekerley.net"]
   spec.description   = %q{Arel-style queries for Riak Yokozuna}
   spec.summary       = %q{Arel-style queries for Riak Yokozuna}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/bkerley/riak-yz-query"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
+
+  spec.required_ruby_version = '> 2.0'
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
